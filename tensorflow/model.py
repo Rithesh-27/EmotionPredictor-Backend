@@ -19,9 +19,13 @@ from keras import layers,losses
 # DATA LOADING AND PREPROCESSING
 
 # loadind text data into pandas dataframe
-train_df = pd.read_table("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/data/train.txt",delimiter=";",header=None)
-val_df = pd.read_table("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/data/val.txt",delimiter=";",header=None)
-test_df = pd.read_table("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/data/test.txt",delimiter=";",header=None)
+app_dir = os.path.dirname(os.path.abspath(__file__))
+train_file = os.path.join(app_dir,"data","train.txt")
+test_file = os.path.join(app_dir,"data","test.txt")
+val_file = os.path.join(app_dir,"data","val.txt")
+train_df = pd.read_table(train_file,delimiter=";",header=None)
+val_df = pd.read_table(val_file,delimiter=";",header=None)
+test_df = pd.read_table(test_file,delimiter=";",header=None)
 
 raw_data = pd.concat([train_df,val_df,test_df])
 raw_data.columns = ["content","sentiment"]
@@ -60,7 +64,7 @@ test_labels = test_df["sentiment"].values
 # using GloVe to assign tokens for feeding into model
 MAX_SEQUENCE_LENGTH = 100
 EMBEDDING_DIM = 100
-GLOVE_PATH = "C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/GloVe_files/glove.6B.100d.txt"
+GLOVE_PATH = os.path.join(app_dir,"GloVe_files","glove.6B.100d.txt")
 
 
 # function to load the GloVe embedding layer form path
@@ -85,7 +89,7 @@ train_features = keras.preprocessing.sequence.pad_sequences(sequences_train, max
 test_features = keras.preprocessing.sequence.pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH)
 
 # saving the tokenizer ogject for future usage in prediction
-with open("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/data/tokenizer.pickle","wb") as handle:
+with open(os.path.join(app_dir,"data","tokenizer.pickle"),"wb") as handle:
     pickle.dump(tokenizer,handle,protocol=pickle.HIGHEST_PROTOCOL)
 
 # creating embedding matrix with words present in GloVe vocabulary
@@ -117,4 +121,4 @@ with tf.device("/GPU:0"):
 model.evaluate(test_features,test_labels)
 
 # saving the model
-model.save("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/model/emotion_predictor.keras")
+model.save(os.path.join(app_dir,"model","emotion_predictor.keras"))

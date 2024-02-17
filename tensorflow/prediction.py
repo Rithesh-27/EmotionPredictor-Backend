@@ -10,12 +10,14 @@ os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/b
 
 import tensorflow as tf
 import numpy as np
+app_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 # loading the model
-model = tf.keras.models.load_model("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/model/emotion_predictor.keras")
+model = tf.keras.models.load_model(os.path.join(app_dir,"model","emotion_predictor.keras"))
 
 # importing training data for creating tokenizer
-with open("C:/Users/rithe/Desktop/python/machine_learning/projects/emotion_predictor/data/tokenizer.pickle","rb") as handle:
+with open(os.path.join(app_dir,"data","tokenizer.pickle"),"rb") as handle:
     tokenizer = pickle.load(handle)
     
 # function to preprocess text
