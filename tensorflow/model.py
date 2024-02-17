@@ -5,7 +5,8 @@
 import contractions
 import pickle
 import os
-os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin")
+program_files_path = os.environ.get("ProgramFiles")
+os.add_dll_directory(os.path.join(program_files_path,"NVIDIA GPU Computing Toolkit","CUDA","v11.2","bin"))
 
 # importing all the required libraries
 import numpy as np
