@@ -5,8 +5,6 @@
 import contractions
 import pickle
 import os
-program_files_path = os.environ.get("ProgramFiles")
-os.add_dll_directory(os.path.join(program_files_path,"NVIDIA GPU Computing Toolkit","CUDA","v11.2","bin"))
 
 import tensorflow as tf
 import numpy as np
