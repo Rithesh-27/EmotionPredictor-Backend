@@ -8,7 +8,7 @@ import os
 
 import tensorflow as tf
 import numpy as np
-app_dir = os.path.dirname(os.path.abspath(__file__))
+app_dir = os.getcwd()
 
 # function to predict the sentiment for given text
 def predict_emotion(text):
